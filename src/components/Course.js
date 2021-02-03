@@ -2,22 +2,39 @@ import React from 'react';
 
 export default function Course({ course, refreshCourses }) {
     const markCoursePurchased = async () => {
-        //TODO mark course as purchased
-    };
+        try {
+            await fetch('/api/courses', {
+                method: 'PUT',
+                body: JSON.stringify({ ...course, purchased: true }),
+            });
+            refreshCourses();
+        } catch (err) {
+            console.error(err);
+        }
+    }
 
     const deleteCourse = async () => {
-        //TODO delete course
-    };
+        try {
+            await fetch('/api/courses', {
+                method: 'DELETE',
+                body: JSON.stringify({ id: course.id }),
+            });
+            refreshCourses();
+        } catch (err) {
+            console.error(err);
+        }
+    }
+
     return (
         <div className="list-group-item">
             <a href={course.link}>
-                <h4 className="list-group-item-heading">{course.name}</h4>
+                <h4 className="list-group-item-heading text-dark"><strong>{course.name}</strong></h4>
             </a>
             <p>
                 Tags:{' '}
                 {course.tags &&
                     course.tags.map((tag, index) => (
-                        <span className="badge badge-primary mr-2" key={index}>
+                        <span className="badge-pill badge-success mr-2" key={index}>
                             {tag}
                         </span>
                     ))}

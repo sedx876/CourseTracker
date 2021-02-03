@@ -15,14 +15,26 @@ export default function CourseForm({ courseAdded }) {
 
     const submitCourse = async (e) => {
         e.preventDefault();
-        //TODO: Create the course
-        resetForm();
-        courseAdded();
-    };
+        try {
+            await fetch('/api/courses', {
+                method: 'POST',
+                body: JSON.stringify({
+                    name,
+                    link,
+                    tags,
+                }),
+            });
+            resetForm();
+            courseAdded();
+        } catch (err) {
+            console.error(err);
+        }
+        console.log(name, link);
+    }
 
     return (
         <div className="card">
-            <div className="card-header">Add a New Course</div>
+            <div className="card-header text-success text-center"><strong>Add a New Course</strong></div>
             <div className="card-body">
                 <form className="" onSubmit={submitCourse}>
                     <div className="form-group">
@@ -46,7 +58,7 @@ export default function CourseForm({ courseAdded }) {
                         />
                     </div>
                     <div className="form-group">
-                        <p>Tags</p>
+                        <p>Tags:</p>
                         <Tags tagsUpdated={setTags} key={count} />
                     </div>
                     <button type="submit" className="btn btn-primary">
