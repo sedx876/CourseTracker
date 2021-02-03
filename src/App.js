@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react'
 import './App.css';
-import CourseList from './components/CourseList';
-import CourseForm from './components/CourseForm';
+import CourseList from './components/CourseList'
+import CourseForm from './components/CourseForm'
 
 function App() {
     const [courses, setCourses] = useState([]);
@@ -22,4 +22,4 @@ function App() {
     );
 }
 
-export default App;
+export default App
